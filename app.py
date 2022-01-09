@@ -149,8 +149,8 @@ def main():
             layout.append(
                 [
                     sg.T(f"ID: {torrent['id']}, Navn: {torrent['name']}, Seeders: {torrent['seeders']}, Leechers: {torrent['leechers']}, Størrelse: {calc(torrent['size'])}"),
-                    sg.B('Hent Torrent', key=f"download: {torrent['id']}"),
-                    sg.B('Magnet', key=f"magnet: {torrent['id']} {torrent['info_hash']}")
+                    sg.B('Hent Torrent', key=f"download: {i}"),
+                    sg.B('Magnet', key=f"magnet: {i}")
                 ]
             )
             i += 1
@@ -165,12 +165,11 @@ def main():
             if event in (sg.WINDOW_CLOSED, 'Exit'):
                 break
             elif 'download: ' in event or 'magnet: ' in event:
+                id = int(event.split(" "))
                 if 'download: ' in event:
-                    tor = d.get_torrent(event.replace('download: ', ''))
-                    os.system(f"start {tor['attributes']['download_link']}")
+                    os.system(f"start https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rss_key']}")
                 elif 'magnet: ' in event:
-                    tor = d.get_torrent(event.replace('magnet: ', '').split(" ")[0])
-                    magnet = f"magnet:?dn={tor['attributes']['name']}&xt=urn:btih:{event.replace('magnet: ', '').split(' ')[1]}&as={tor['attributes']['download_link']}&xl={tor['attributes']['size']}&tr=https://danishbytes.club/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes2.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.art/announce/e064ba0c35d252338572fd7720448cc5"
+                    magnet = f"magnet:?dn={movies['torrents'][id]['name']}&xt=urn:btih:{movies['torrents'][id]['info_hash']}&as=https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rss_key']}&xl={movies['torrents'][id]['size']}&tr=https://danishbytes.club/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes2.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.art/announce/e064ba0c35d252338572fd7720448cc5"
                     open_magnet(magnet)
         return
     print(f"[{Fore.BLUE}i{Fore.RESET}] Ingen film for {values['pick']} fundet, prøv med noget andet?")
