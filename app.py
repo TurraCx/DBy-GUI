@@ -167,9 +167,9 @@ def main():
             elif 'download: ' in event or 'magnet: ' in event:
                 id = int(event.split(" "))
                 if 'download: ' in event:
-                    os.system(f"start https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rss_key']}")
+                    os.system(f"start https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rsskey']}")
                 elif 'magnet: ' in event:
-                    magnet = f"magnet:?dn={movies['torrents'][id]['name']}&xt=urn:btih:{movies['torrents'][id]['info_hash']}&as=https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rss_key']}&xl={movies['torrents'][id]['size']}&tr=https://danishbytes.club/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes2.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.art/announce/e064ba0c35d252338572fd7720448cc5"
+                    magnet = f"magnet:?dn={movies['torrents'][id]['name']}&xt=urn:btih:{movies['torrents'][id]['info_hash']}&as=https://danishbytes.club/torrent/download/{movies['torrents'][id]['id']}.{movies['rsskey']}&xl={movies['torrents'][id]['size']}&tr=https://danishbytes.club/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes2.org/announce/e064ba0c35d252338572fd7720448cc5&tr=https://danishbytes.art/announce/e064ba0c35d252338572fd7720448cc5"
                     open_magnet(magnet)
         return
     print(f"[{Fore.BLUE}i{Fore.RESET}] Ingen film for {values['pick']} fundet, prøv med noget andet?")
